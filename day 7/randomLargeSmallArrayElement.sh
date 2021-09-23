@@ -1,31 +1,33 @@
-#!bin/bash -x
-counter=0
-Array[((counter++))]=$((RANDOM%900 + 100))
-Array[((counter++))]=$((RANDOM%900 + 100))
-Array[((counter++))]=$((RANDOM%900 + 100))
-Array[((counter++))]=$((RANDOM%900 + 100))
-Array[((counter++))]=$((RANDOM%900 + 100))
-Array[((counter++))]=$((RANDOM%900 + 100))
-Array[((counter++))]=$((RANDOM%900 + 100))
-Array[((counter++))]=$((RANDOM%900 + 100))
-Array[((counter++))]=$((RANDOM%900 + 100))
-Array[((counter++))]=$((RANDOM%900 + 100))
+#! /bin/bash -x
 
-echo ${Array[@]}
-for ((i=0; i<n; i++))
-  do
-    for ((j=$i; j<n; j++))
-      do
-        if [ ${a[$i]} -gt ${a[$j]} ]
-        then
-            temp=${a[$i]}
-            a[$i]=${a[$j]}
-            a[$i]=$temp
-        fi
-      done
-  done
-echo "Array after sorting: "
-for ((i=0; i<n; i++))
-  do
-    echo ${a[$i]}
-  done
+MAXCOUNT=5
+count=1
+
+while [ "$count" -le $MAXCOUNT ];
+do
+ number[$count]=$((RANDOM%1000))
+ let "count += 1"
+done
+
+echo "Random numbers: ${number[*]}"
+
+max=secondMax=${number[1]}
+min=secondMin=${number[1]}
+
+for i in "${number[@]}"
+do
+    if [[ "$i" -gt "$max" ]]; then
+	secondMax="$max"
+        max="$i"
+    elif [[ "$i" -gt "$secondMax" && "$i" != "$max" ]]; then
+	secondMax="$i"
+    fi
+    if [[ "$i" -lt "$min" ]]; then
+	secondMin="$min"
+        min="$i"
+    elif [[ "$i" -lt "$secondMin" && "$i" != "$min" ]]; then
+	secondMin="$i"
+    fi
+done
+echo "Max is: " "$secondMax"
+echo "Min is: " "$secondMin"
